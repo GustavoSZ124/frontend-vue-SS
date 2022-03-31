@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="text-h3 text-center my-4">Upload new document</h1>
+    <h1 class="text-h3 text-center my-4">Upload new translation</h1>
     <v-form v-model="valid" @submit.prevent="newDocument" ref="form">
       <v-row>
         <v-col cols="12" md="6">
@@ -50,6 +50,16 @@
         <v-col cols="4">
           <v-select
             filled
+            label="Select document"
+            :items="selectDocuments"
+            v-model="form.document"
+            :menu-props="{ offsetY: true }"
+            :rules="documentRules"
+            clearable
+          ></v-select>
+
+          <v-select
+            filled
             label="Select language"
             :items="languages"
             v-model="form.language"
@@ -77,11 +87,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Dropzone from "../components/Dropzone.vue";
 
 export default {
-  name: "UploadDocument",
+  name: "UploadTranslation",
   components: {
     Dropzone,
   },
@@ -93,17 +103,28 @@ export default {
       author: "",
       language: null,
       file: null,
+      document: null,
     },
-    titleRules: [(v) => !!v || "Required Title"],
-    authorRules: [(v) => !!v || "Required Author"],
-    languageRules: [(v) => !!v || "Required Language"],
-    fileRules: [(v) => !!v || "Required File"],
+    file: null,
+    titleRules: [(v) => !!v || "Titulo requerido"],
+    authorRules: [(v) => !!v || "Autor requerido"],
+    languageRules: [(v) => !!v || "Idioma requerido"],
+    documentRules: [(v) => !!v || "Documento requerido"],
+    fileRules: [(v) => !!v || "Archivo requerido"],
   }),
   computed: {
-    ...mapState(["languages"]),
+    ...mapState(["documents", "languages"]),
+    selectDocuments() {
+      let docs = [];
+      this.documents.forEach((doc) => {
+        if (doc.type === "Original")
+          docs.push({ value: doc.id, text: doc.title });
+      });
+      return docs;
+    },
   },
   methods: {
-    ...mapActions(["uploadApiDocument"]),
+    ...mapActions(["getApiDocuments", "uploadApiTranslation"]),
     newDocument() {
       const formData = new FormData();
 
@@ -111,13 +132,16 @@ export default {
         formData.append(key, this.form[key]);
       });
 
-      this.uploadApiDocument(formData);
+      this.uploadApiTranslation(formData);
       this.flag_msg = true;
       this.$refs.form.reset();
     },
   },
+  created() {
+    if (this.documents.length === 0) this.getApiDocuments();
+  },
 };
 </script>
 
-<style scoped>
+<style>
 </style>

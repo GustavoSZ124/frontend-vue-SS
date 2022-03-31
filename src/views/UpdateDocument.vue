@@ -114,11 +114,6 @@ export default {
     flag_msg: false,
     dialog: false,
     valid: false,
-    languages: [
-      { value: "EN", text: "English" },
-      { value: "ES", text: "Español" },
-      { value: "ZH", text: "Chino Tradicional" },
-    ],
     form: {
       title: "",
       author: "",
@@ -131,7 +126,7 @@ export default {
     fileRules: [(v) => !!v || "Required File"],
   }),
   computed: {
-    ...mapState(["documents"]),
+    ...mapState(["documents", "languages"]),
     changes() {
       let change = false;
       Object.keys(this.form).forEach((key) => {

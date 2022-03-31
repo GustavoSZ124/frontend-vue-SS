@@ -40,18 +40,18 @@ export default {
         view: "UploadDocument",
       },
       {
-        title: "Files",
-        text: "See all documents, translations and variants in the web application.",
-        src: require("../assets/files.png"),
-        alt: "ver archivos.png",
-        view: "Files",
-      },
-      {
         title: "Upload Translation",
         text: "Upload a translation of a document previously uploaded in the application.",
         src: require("../assets/translator.png"),
         alt: "traduccion.png",
         view: "UploadTranslation",
+      },
+      {
+        title: "Files",
+        text: "See all documents, translations and variants in the web application.",
+        src: require("../assets/files.png"),
+        alt: "ver archivos.png",
+        view: "Files",
       },
       {
         title: "Upload Variant",

@@ -9,6 +9,11 @@ const api = 'http://127.0.0.1:8000/api/'
 export default new Vuex.Store({
   state: {
     documents: [],
+    languages: [
+      { value: "EN", text: "English" },
+      { value: "ES", text: "Español" },
+      { value: "ZH", text: "Chino Tradicional" },
+    ],
   },
   mutations: {
     setDocuments(state, actDocuments) {
@@ -48,6 +53,17 @@ export default new Vuex.Store({
     updateApiDocument: function ({ dispatch }, { id, formData }) {
       axios
         .post(api + "documents/" + id, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((response) => {
+          console.log(response.data);
+          dispatch('getApiDocuments');
+        })
+        .catch((e) => console.log(e));
+    },
+    uploadApiTranslation: function ({ dispatch }, formData) {
+      axios
+        .post(api + "translations", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((response) => {
