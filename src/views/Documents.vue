@@ -29,7 +29,7 @@
                 <v-list-item
                   v-for="(item, i) in items"
                   :key="i"
-                  :to="{ name: 'Document', params: { id: item.id } }"
+                  :to="{ name: 'UpdateDocument', params: { id: item.id } }"
                 >
                   <v-list-item-content>
                     {{ item.title }} - {{ item.author }}
@@ -43,7 +43,7 @@
                           color="primary"
                           :to="{
                             name: 'UpdateDocument',
-                            params: { id: item.id },
+                            params: { id: i },
                           }"
                           class="ml-1"
                         >

@@ -20,6 +20,11 @@ const routes = [
     name: 'Documents',
     component: () => import('@/views/Documents.vue')
   },
+  {
+    path: '/update/document/:id',
+    name: 'UpdateDocument',
+    component: () => import('@/views/UpdateDocument.vue')
+  },
 ]
 
 const router = new VueRouter({

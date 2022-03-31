@@ -40,6 +40,17 @@ export default new Vuex.Store({
       axios
         .delete(api + "documents/" + id)
         .then((response) => {
+          //console.log(response.data);
+          dispatch('getApiDocuments');
+        })
+        .catch((e) => console.log(e));
+    },
+    updateApiDocument: function ({ dispatch }, { id, formData }) {
+      axios
+        .post(api + "documents/" + id, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((response) => {
           console.log(response.data);
           dispatch('getApiDocuments');
         })
