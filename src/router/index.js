@@ -30,6 +30,11 @@ const routes = [
     name: 'UploadTranslation',
     component: () => import('@/views/UploadTranslation.vue')
   },
+  {
+    path: '/document/:id',
+    name: 'Document',
+    component: () => import('@/views/DocumentTranslations.vue')
+  },
 ]
 
 const router = new VueRouter({

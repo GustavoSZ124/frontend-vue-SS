@@ -8,16 +8,24 @@ const api = 'http://127.0.0.1:8000/api/'
 
 export default new Vuex.Store({
   state: {
-    documents: [],
     languages: [
       { value: "EN", text: "English" },
       { value: "ES", text: "Español" },
       { value: "ZH", text: "Chino Tradicional" },
     ],
+    documents: [],
+    select: null,
+    translations: [],
   },
   mutations: {
     setDocuments(state, actDocuments) {
       state.documents = actDocuments
+    },
+    setDocument(state, actDocument) {
+      state.select = actDocument
+    },
+    setTranslations(state, actTranslations) {
+      state.translations = actTranslations
     },
   },
   actions: {
@@ -50,7 +58,7 @@ export default new Vuex.Store({
         })
         .catch((e) => console.log(e));
     },
-    updateApiDocument: function ({ dispatch }, { id, formData }) {
+    updateApiDocument: function ({ commit, dispatch }, { id, formData }) {
       axios
         .post(api + "documents/" + id, formData, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -58,6 +66,7 @@ export default new Vuex.Store({
         .then((response) => {
           console.log(response.data);
           dispatch('getApiDocuments');
+          commit('setDocument', null);
         })
         .catch((e) => console.log(e));
     },
@@ -69,6 +78,16 @@ export default new Vuex.Store({
         .then((response) => {
           console.log(response.data);
           dispatch('getApiDocuments');
+        })
+        .catch((e) => console.log(e));
+    },
+    getApiDocument: function ({ commit }, id) {
+      axios
+        .get(api + "documents/" + id)
+        .then((response) => {
+          console.log(response.data.translations);
+          commit('setDocument', response.data.original);
+          commit('setTranslations', response.data.translations);
         })
         .catch((e) => console.log(e));
     },
