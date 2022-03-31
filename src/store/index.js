@@ -36,6 +36,15 @@ export default new Vuex.Store({
         })
         .catch((e) => console.log(e));
     },
+    deleteApiDocument: function ({ dispatch }, id) {
+      axios
+        .delete(api + "documents/" + id)
+        .then((response) => {
+          console.log(response.data);
+          dispatch('getApiDocuments');
+        })
+        .catch((e) => console.log(e));
+    },
   },
   modules: {
   }

@@ -15,6 +15,11 @@ const routes = [
     name: 'UploadDocument',
     component: () => import('@/views/UploadDocument.vue')
   },
+  {
+    path: '/documents',
+    name: 'Documents',
+    component: () => import('@/views/Documents.vue')
+  },
 ]
 
 const router = new VueRouter({
