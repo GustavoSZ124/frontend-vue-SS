@@ -9,7 +9,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  }
+  },
+  {
+    path: '/new/document',
+    name: 'UploadDocument',
+    component: () => import('@/views/UploadDocument.vue')
+  },
 ]
 
 const router = new VueRouter({
