@@ -35,6 +35,12 @@ const routes = [
     name: 'Document',
     component: () => import('@/views/DocumentTranslations.vue')
   },
+
+  {
+    path: '/dictionary',
+    name: 'Dictionary',
+    component: () => import('@/views/Dictionary.vue')
+  },
 ]
 
 const router = new VueRouter({

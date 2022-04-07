@@ -65,7 +65,7 @@ export default {
         text: "Consult words and lexemes to know their meaning.",
         src: require("../assets/dictionary.png"),
         alt: "diccionario.png",
-        view: "Home",
+        view: "Dictionary",
       },
     ],
   }),
