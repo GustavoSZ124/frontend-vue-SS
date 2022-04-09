@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar app dark>
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title class="mx-3">Logo</v-app-bar-title>
       <v-container fluid>
         <v-btn to="/" retain-focus-on-click plain class="pa-2 text-capitalize">
@@ -46,7 +46,6 @@
             <v-autocomplete
               v-model="model"
               :items="dictionary"
-              :filter="filter"
               :loading="isLoading"
               :search-input.sync="search"
               item-text="traditional"
@@ -103,9 +102,12 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Navbar",
+  props: {
+    Pdrawer: Boolean,
+    word: String,
+  },
   data: () => ({
     drawer: null,
-    //dictionary: [],
     model: null,
     isLoading: false,
     search: null,
@@ -114,9 +116,35 @@ export default {
     ...mapState(["dictionary"]),
   },
   methods: {
-    ...mapActions(["getDictionary"]),
+    ...mapActions(["getApiDictionary"]),
+    /* 
     filter(item, queryText, itemText) {
       return itemText.startsWith(queryText);
+    }, */
+    async Psearch(word) {
+      this.drawer = true;
+      this.model = null;
+      if (this.dictionary.length === 0 && !this.isLoading) {
+        this.isLoading = true;
+        await this.getApiDictionary();
+        this.isLoading = false;
+        console.log("Get Dictionary");
+      }
+
+      this.dictionary.every((entry) => {
+        if (entry.traditional === word) {
+          this.model = entry;
+          return false;
+        }
+        return true;
+      });
+      /* 
+      this.dictionary.forEach((entry) => {
+        if (entry.traditional === word) {
+          this.model = entry;
+
+        }
+      }); */
     },
   },
   watch: {
@@ -130,8 +158,9 @@ export default {
 
       this.isLoading = true;
 
-      this.getDictionary();
-      this.isLoading = false;
+      this.getApiDictionary().then(() => {
+        this.isLoading = false;
+      });
     },
   },
 };

@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar ref="navbar" />
     <v-main>
-      <router-view />
+      <router-view @drawer="search" />
     </v-main>
   </v-app>
 </template>
@@ -14,6 +14,15 @@ export default {
   name: "App",
   components: {
     Navbar,
+  },
+  data: () => ({
+    drawer: false,
+    word: "",
+  }),
+  methods: {
+    search(word) {
+      this.$refs.navbar.Psearch(word);
+    },
   },
 };
 </script>

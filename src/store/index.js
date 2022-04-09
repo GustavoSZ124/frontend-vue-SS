@@ -17,7 +17,6 @@ export default new Vuex.Store({
     select: null,
     translations: [],
     dictionary: [],
-    entry: "",
   },
   mutations: {
     setDocuments(state, actDocuments) {
@@ -34,6 +33,9 @@ export default new Vuex.Store({
     },
     setEntry(state, actEntry) {
       state.entry = actEntry
+    },
+    setDictFlag(state, actDictFlag) {
+      state.dict_flag = actDictFlag
     }
   },
   actions: {
@@ -93,30 +95,16 @@ export default new Vuex.Store({
       axios
         .get(api + "documents/" + id)
         .then((response) => {
-          console.log(response.data.translations);
+          //console.log(response.data.translations);
           commit('setDocument', response.data.original);
           commit('setTranslations', response.data.translations);
         })
         .catch((e) => console.log(e));
     },
-    async getDictionary({ commit }) {
-      try {
-        const { data } = await axios.get(api + "media/cedict.json")
-        commit("setDictionary", data)
-      }
-      catch (e) {
-        console.log(e)
-      }
-
-      /* 
-      axios
-        .get(api + "media/cedict.json")
-        .then((response) => {
-          //console.log(response.data);
-          commit('setDictionary', response.data)
-        })
-        .catch((e) => console.log(e)); */
-    }
+    async getApiDictionary({ commit }) {
+      const { data } = await axios.get(api + "media/cedict.json").catch((e) => { console.log(e) })
+      commit("setDictionary", data)
+    },
   },
   modules: {
   }

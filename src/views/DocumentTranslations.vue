@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid @mouseup="selection">
     <h1 v-if="select" class="text-h3 text-center my-4">
       {{ select.document.title }}
     </h1>
@@ -85,6 +85,7 @@
                       {{ chapter.chapter }}
                     </h3>
                     <br />
+
                     <p
                       v-for="(passage, k) in chapter.passages"
                       :key="k"
@@ -102,23 +103,54 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-btn
+      v-show="button"
+      id="search"
+      color="blue"
+      dark
+      fab
+      x-small
+      absolute
+      @click="search"
+    >
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
+    <!-- 
+    <v-fab-transition>
+      <v-btn
+        v-show="button"
+        id="search"
+        color="blue"
+        dark
+        fab
+        x-small
+        absolute
+        @click="search"
+      >
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </v-fab-transition> -->
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   name: "DocumentTranslations",
   data: () => ({
     tab: "",
+    mark: "",
     phover: "",
     height: 450,
     sync: false,
+    value: "",
+    button: false,
   }),
   computed: {
-    ...mapState(["select", "translations"]),
+    ...mapState(["select", "translations", "entry", "dict_flag"]),
   },
   methods: {
+    ...mapMutations(["setDictFlag", "setEntry"]),
     ...mapActions(["getApiDocument"]),
     syncScroll(target) {
       var d1 = document.getElementById("original");
@@ -127,6 +159,23 @@ export default {
 
       d1.scrollTop = Math.round((d1.scrollHeight - 399) * porcentaje);
       d2.scrollTop = Math.round((d2.scrollHeight - 399) * porcentaje);
+    },
+    selection(e) {
+      let sel = window.getSelection();
+      if (sel.toString() !== "" && !this.button) {
+        let btn = document.getElementById("search");
+
+        btn.style.left = e.clientX - 5 + "px";
+        btn.style.top = e.clientY - 50 + "px";
+
+        this.button = true;
+        this.value = sel.toString();
+      } else this.button = false;
+    },
+    search() {
+      this.button = false;
+
+      this.$emit("drawer", this.value);
     },
   },
   created() {
