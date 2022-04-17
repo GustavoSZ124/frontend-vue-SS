@@ -1,6 +1,6 @@
 # frontend-vue
 
-## prerequisites
+## Prerequisites
 - Node.js installed [Node.js](https://nodejs.org/en/) (Node.js 14.17.5 used)
 ## Project setup
 ### Install the required packages
