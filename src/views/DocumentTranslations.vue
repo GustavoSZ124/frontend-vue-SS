@@ -115,21 +115,6 @@
     >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <!-- 
-    <v-fab-transition>
-      <v-btn
-        v-show="button"
-        id="search"
-        color="blue"
-        dark
-        fab
-        x-small
-        absolute
-        @click="search"
-      >
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-    </v-fab-transition> -->
   </v-container>
 </template>
 
@@ -142,7 +127,7 @@ export default {
     mark: "",
     phover: "",
     height: 450,
-    sync: false,
+    sync: true,
     value: "",
     button: false,
   }),

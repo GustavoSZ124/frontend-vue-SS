@@ -91,6 +91,15 @@ export default new Vuex.Store({
         })
         .catch((e) => console.log(e));
     },
+    deleteApiTranlation: function ({ dispatch }, id) {
+      axios
+        .delete(api + "translatios/" + id)
+        .then((response) => {
+          console.log(response.data);
+          dispatch('getApiDocuments');
+        })
+        .catch((e) => console.log(e));
+    },
     getApiDocument: function ({ commit }, id) {
       axios
         .get(api + "documents/" + id)
@@ -102,7 +111,7 @@ export default new Vuex.Store({
         .catch((e) => console.log(e));
     },
     async getApiDictionary({ commit }) {
-      const { data } = await axios.get(api + "media/cedict.json").catch((e) => { console.log(e) })
+      const { data } = await axios.get(api + "static/cedict.json").catch((e) => { console.log(e) })
       commit("setDictionary", data)
     },
   },

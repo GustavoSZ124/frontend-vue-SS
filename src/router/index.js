@@ -35,11 +35,15 @@ const routes = [
     name: 'Document',
     component: () => import('@/views/DocumentTranslations.vue')
   },
-
   {
     path: '/dictionary',
     name: 'Dictionary',
     component: () => import('@/views/Dictionary.vue')
+  },
+  {
+    path: '/files',
+    name: 'Files',
+    component: () => import('@/views/Files.vue')
   },
 ]
 
