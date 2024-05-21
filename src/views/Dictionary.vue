@@ -84,7 +84,7 @@ export default {
     ...mapState(["dictionary"]),
   },
   methods: {
-    ...mapActions(["getDictionary"]),
+    ...mapActions(["getApiDictionary"]),
     filter(item, queryText, itemText) {
       return itemText.startsWith(queryText);
     },
@@ -99,7 +99,7 @@ export default {
 
       this.isLoading = true;
 
-      this.getDictionary();
+      this.getApiDictionary();
       this.isLoading = false;
     },
   },
